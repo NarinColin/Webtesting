@@ -1,0 +1,42 @@
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+
+namespace christmasCheck
+{
+    class Program
+    {
+        
+        static void Main(string[] args)
+        {
+            //Create reference for Chrome and set English as default language
+            ChromeOptions options = new ChromeOptions();
+            options.AddArguments("--lang=en-UK");
+            IWebDriver driver = new ChromeDriver("D:\\chromedriver_win32", options);
+
+
+            //Navigate to Google Home page
+            driver.Navigate().GoToUrl("https://www.google.com/");
+            
+            //Find the Search bar
+            IWebElement element = driver.FindElement(By.Name("q"));
+
+            //Send key
+            element.SendKeys("christmas");
+            element.SendKeys(Keys.Enter);
+
+            //Find date
+            string text = driver.FindElement(By.ClassName("zCubwf")).Text;
+            
+            //Conditional 
+            if (text == "Sunday, December 25") 
+            {
+                Console.WriteLine("Passed");
+            }
+            else
+            {
+                Console.WriteLine("Failed");
+            }
+         
+        }
+    }
+}
